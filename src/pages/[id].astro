@@ -1,14 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import EventDetail from '../components/EventDetail.svelte';
-import data from '../data.json';
+
 
 export function getStaticPaths() {
-  return data.events.map(e => ({params: {id: e.id}}))
+  return [{ params: { id: 'placeholder' } }];
 }
 
 const { id } = Astro.params;
-const item = data.events.find(i => i.id === id);
+
 ---
 
 <Layout >
