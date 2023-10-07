@@ -1,0 +1,79 @@
+body {
+  color: white;
+  font-family: "Archivo", sans-serif;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  body {
+    @apply bg-black;
+    @apply font-mono font-light;
+  }
+
+  nav {
+    font-family: "Archivo", sans-serif;
+    font-weight: 400;
+  }
+
+  #header-shade {
+    @apply h-10 bg-gradient-to-b from-black to-transparent;
+  }
+
+  footer a,
+  .markdown a {
+    @apply underline hover:no-underline text-white;
+  }
+  .markdown-basic a {
+    @apply underline hover:no-underline;
+  }
+
+  .markdown p {
+  }
+
+  .markdown.multiline > p:not(:last-child) {
+    @apply mb-10;
+  }
+
+  .middle-pane-medium {
+    @apply max-w-7xl mx-auto px-6 xl:px-0;
+  }
+  .middle-pane-big {
+    @apply max-w-screen-2xl mx-auto px-6 2xl:px-0;
+  }
+
+  .button {
+    /*@apply px-3 py-1.5 text-black bg-white border border-black cursor-pointer;*/
+    @apply px-5 py-2 text-white bg-black border border-white cursor-pointer no-underline uppercase transition-all;
+  }
+  .button:hover,
+  .button-inactive {
+    @apply text-black bg-white border  no-underline;
+  }
+  .button:hover.button-inactive {
+    @apply cursor-default text-gray-600 border-gray-600;
+  }
+  .button-inverse {
+    @apply px-5 py-2 text-white bg-black border border-black cursor-pointer;
+  }
+  .button-inverse:hover {
+    @apply text-black bg-white border border-black;
+  }
+  .section-header {
+    @apply inline-block font-mono2 lowercase text-xl md:text-3xl mb-8 md:mb-16 font-light pt-4 mt-6 border-t-2;
+  }
+  .section-subheader {
+    @apply text-2xl font-mono2 lowercase mb-4 md:mb-8;
+  }
+
+  .darker {
+    @apply text-[#999999];
+  }
+}
+
+.active-tab {
+  color: white;
+  font-weight: 400;
+}

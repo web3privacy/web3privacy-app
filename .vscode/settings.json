@@ -1,0 +1,6 @@
+{
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": "web3privacy/.github/workflows/deploy.yaml"
+  },
+  "github.copilot.inlineSuggest.enable": true
+}

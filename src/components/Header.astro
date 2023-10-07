@@ -1,0 +1,111 @@
+---
+import "../styles/utils.css";
+import { animateText, handleAnchorClick } from "../lib/helpers.js";
+import data from "../lib/config.json";
+import { onMount } from "svelte";
+
+let navbar = false;
+let choosed = null;
+let currentPath = "";
+
+const menu = [
+  { title: "Dashboard", name: "Dashboard", url: "" },
+  { title: "Manifesto", url: "/manifesto" },
+  { title: "Articles", url: "/articles" },
+  { title: "Events", url: "/events" },
+  { title: "Community", url: "/community" },
+  { title: "FAQ", url: "/faq" },
+];
+
+onMount(() => {
+  currentPath = window.location.pathname;
+});
+---
+
+<nav class="fixed w-full h-18 z-40 top-0" id="header">
+  <div class="bg-black pb-0.5 pt-2">
+    <div class="middle-pane-big">
+      <div class="flex my-1 justify-between">
+        <div class="flex items-center">
+          <div class="w-36 py-2">
+            <a href="/"><img src={data.logo} alt={data.title} /></a>
+          </div>
+          <!--h1 class="text-2xl uppercase">{data.config.title}</h1-->
+        </div>
+        <div
+          class="flex items-center lg:gap-8 xl:gap-14 text-sm darker tracking-wider underline-offset-2"
+        >
+          <button
+            class="lg:hidden text-3xl"
+            onclick={(ev) => (navbar = !navbar)}>☰</button
+          >
+          {
+            menu
+              .filter((i) => !i.hidden)
+              .map((mi) => (
+                <div class="hidden lg:block" key={mi.title}>
+                  <a
+                    class={`${mi.class ? mi.class : "hover:underline"} ${
+                      mi.url === currentPath
+                        ? "font-semibold text-white underline"
+                        : ""
+                    } ${mi.external ? "external" : ""} ${
+                      mi.ico ? "mi-img" : ""
+                    }`}
+                    href={mi.url}
+                    onmouseenter={mi.ico ? null : () => animateText()}
+                    onclick={!mi.external ? () => handleAnchorClick() : null}
+                    target={mi.external ? "_blank" : ""}
+                  >
+                    {mi.ico ? (
+                      <div class={`ico-${mi.ico}`}>
+                        <div class="ico-children" />
+                      </div>
+                    ) : (
+                      mi.name?.toUpperCase() || mi.title.toUpperCase()
+                    )}
+                  </a>
+                </div>
+              ))
+          }
+        </div>
+        <div
+          class="hidden lg:block self-center text-sm tracking-wider"
+          key="Connect"
+        >
+          <a
+            class="button"
+            href="https://watch.web3privacy.info/"
+            onmouseenter="() => __vite_ssr_import_2__.animateText()"
+            onclick="() => __vite_ssr_import_2__.handleAnchorClick()"
+            target=""
+          >
+            CONNECT
+          </a>
+        </div>
+      </div>
+    </div>
+    {
+      navbar && (
+        <div class="w-full lg:hidden p-4">
+          {menu
+            .filter((i) => !i.hidden)
+            .map((mi) => (
+              <div class="my-3 mx-4" key={mi.title}>
+                <a href={mi.url} onclick={() => (navbar = false)}>
+                  <button
+                    class={`${mi.class} uppercase text-xl ${
+                      mi.external ? "external" : ""
+                    }`}
+                  >
+                    {mi.title}
+                  </button>
+                </a>
+              </div>
+            ))}
+        </div>
+      )
+    }
+  </div>
+  <div id="header-shade"></div>
+</nav>
