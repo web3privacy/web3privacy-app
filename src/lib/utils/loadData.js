@@ -3,9 +3,10 @@ let data;
 export async function loadData() {
   if (!data) {
     const response = await fetch(
-      "https://web3privacy-app.vercel.app/projects.json",
+      "https://raw.githubusercontent.com/web3privacy/data/main/dist/bundle.json",
     );
     data = await response.json();
+    console.log(data);
   }
   return data;
 }
