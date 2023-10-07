@@ -24,10 +24,10 @@
   <div class="flex flex-col items-start justify-start gap-2 box-border">
     {#each Object.entries($projectCounts) as [category, count]}
       <button
-        class="flex items-center justify-center gap-1 p-2 hover:bg-white/20 {activeCategoryValue ==
+        class="flex items-center justify-center gap-1 p-2 {activeCategoryValue ==
         category
           ? 'bg-white text-black'
-          : ''}"
+          : 'hover:bg-white/20'}"
         on:click={() => setActiveCategory(category)}
       >
         <div class="flex gap-1">

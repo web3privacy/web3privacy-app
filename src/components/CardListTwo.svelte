@@ -10,11 +10,11 @@
   class="px-2 py-2 pr-6 border border-1 hover:cursor-point transition-all border-white/30 cursor-pointer hover:bg-white hover:text-black hover:border-black w-full group"
   on:mouseenter={animateCard}
 >
-  <div class="w-full gap-6 justify-center items-center">
+  <div class="w-full gap-6 justify-center items-center flex">
     <img
       src="/zkBob.png"
       alt=""
-      class="object-cover bg-gray-300 max-w-full block w-44 border border-black"
+      class="object-cover bg-gray-300 w-44 border border-black"
     />
     <div class="w-full gap-3 flex flex-col justify-start items-start">
       <div class="gap-2 flex flex-col justify-start items-start">
