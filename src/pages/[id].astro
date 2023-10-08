@@ -74,8 +74,8 @@ function getPlatform(link) {
       break;
 
     default:
-      icon = null;
-      name = null;
+      icon;
+      name;
       break;
   }
 
@@ -174,7 +174,7 @@ function getPlatform(link) {
           <div class="gap-2 flex-col justify-start items-start flex">
             <div class="text-gray-500 pt-4 text-base font-normal leading-none">Links</div>
             <div class="gap-6 flex-shrink-0 justify-start items-end flex">
-              {Object.entries(item.links).map(([key, url]) => {
+              {Object.entries(item?.links ?? {}).map(([key, url]) => {
                 const { icon, name } = getPlatform(key);
                 return (
                   icon && name ? (
