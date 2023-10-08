@@ -5,10 +5,22 @@ import { config } from '../lib/config.js';
 import Sidebar from "../components/Sidebar.svelte"
 import CardList from "../components/CardList.svelte"
 import CardListTwo from "../components/CardListTwo.svelte"
+  import { calculateCounts } from "../lib/utils/calculateCounts.js";
 
 import { loadData } from "../lib/utils/loadData"
 
 const bundle = await loadData();
+
+const featured = [
+  'basicswap',
+  'firn-protocol',
+  'offshift',
+  'panther-protocl',
+  'railgun',
+  'secret-network',
+  'shade',
+  'xata'
+];
 
 ---
 
@@ -37,7 +49,7 @@ const bundle = await loadData();
 						<div class="button px-4 py-1 bg-white text-black font-bold">
 							<div>All</div>
 						</div>
-						<div class="button px-4 py-1">
+						<!-- <div class="button px-4 py-1">
 							<div>Zk-tech</div>
 						</div>
 						<div class="button px-4 py-1">
@@ -48,25 +60,25 @@ const bundle = await loadData();
 						</div>
 						<div class="button px-4 py-1">
 							<div>Secret</div>
-						</div>
+						</div> -->
 					</div>
 					<div class="gap-4" style="flex: 0 1 auto;align-items:center;display:flex;box-sizing:border-box;">
 						<div style="opacity:0.5;color:rgb(255, 255, 255);font-size:17px;font-weight:400;line-height:23.32px;box-sizing:border-box;">Sort by</div>
 						<select class="gap-2 bg-white text-black flex-initial justify-start items-center flex  px-2 py-2 font-bold border-r-8 border-white focus:ring-0 focus:ring-offset-0 focus:outline-none">
-							<option selected="">Privacy Score</option>
-							<option value="US">United States</option>
-							<option value="CA">Canada</option>
-							<option value="FR">France</option>
-							<option value="DE">Germany</option>
+							<option selected="">Alphabetical</option>
 						</select>
 						</div>
 					</div>
 		
-					{bundle.projects.map(project => (
-						<CardListTwo item={project} />
-					))} 
+					{bundle.projects
+						.filter(project => featured.includes(project.id))
+						.sort((a, b) => a.id.localeCompare(b.id))
+						.map(project => (
+							<CardListTwo item={project} />
+					))}
 				</div>
 			</div>
 		</div>
 	</div>
 </Layout>
+

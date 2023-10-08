@@ -13,7 +13,7 @@
 >
   <div class="w-full gap-6 justify-center items-center flex">
     <img
-      src={"/unknown.svg"}
+      src={`/projects/${item.id}.png`}
       alt=""
       class="bg-black object-cover w-44 border border-black"
     />
@@ -94,7 +94,9 @@
         <div
           class="border-2 flex justify-center items-center p-3 gap-2 box-border group-hover:border-black"
         >
-          <div class="text-2xl font-bold leading-none">84%</div>
+          <div class="text-2xl font-bold leading-none">
+            {Math.floor(Math.random() * (81 - 30) + 30)}%
+          </div>
         </div>
       </div>
     </div>

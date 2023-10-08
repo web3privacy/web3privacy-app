@@ -2,27 +2,222 @@
 import Layout from '../layouts/Layout.astro';
 import { getFilteredProjects } from "../lib/utils/calculateCounts"
 
-
 export async function getStaticPaths() {
   const projects = await getFilteredProjects()
-  console.log(projects)
   const paths = projects.map(project => ({
     params: { id: project.id },
   }));
-  console.log(paths);
+
   return paths;
 }
 
 
 const { id } = Astro.params;
 
+const projects = await getFilteredProjects()
+console.log("Ahoj")
+
+const item = projects.find(i => i.id === id);
+
+function getPlatform(link) {
+  console.log(link)
+  let icon, name;
+
+  switch (link) {
+    case 'web':
+      icon = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 28 28">
+  <path fill="#fff" d="M14 27.333a12.9 12.9 0 0 1-5.167-1.05 13.524 13.524 0 0 1-4.25-2.866 13.524 13.524 0 0 1-2.867-4.25A12.9 12.9 0 0 1 .666 14c0-1.845.35-3.572 1.05-5.183a13.577 13.577 0 0 1 2.867-4.234 13.524 13.524 0 0 1 4.25-2.866c1.622-.7 3.344-1.05 5.166-1.05 1.845 0 3.573.35 5.184 1.05 1.61.7 3.022 1.655 4.233 2.866a13.578 13.578 0 0 1 2.867 4.234c.7 1.61 1.05 3.338 1.05 5.183a12.9 12.9 0 0 1-1.05 5.167 13.525 13.525 0 0 1-2.867 4.25 13.577 13.577 0 0 1-4.233 2.866c-1.611.7-3.34 1.05-5.184 1.05Zm0-2.733c.577-.8 1.077-1.633 1.5-2.5a15.78 15.78 0 0 0 1.033-2.767h-5.067c.267.978.611 1.9 1.033 2.767.423.867.923 1.7 1.5 2.5Zm-3.467-.533c-.4-.734-.75-1.495-1.05-2.284-.3-.789-.55-1.605-.75-2.45H4.799a11.064 11.064 0 0 0 2.417 2.9 9.594 9.594 0 0 0 3.317 1.834Zm6.933 0a9.594 9.594 0 0 0 3.317-1.834 11.064 11.064 0 0 0 2.416-2.9h-3.933c-.2.845-.45 1.661-.75 2.45-.3.79-.65 1.55-1.05 2.284Zm-13.8-7.4h4.533A17.615 17.615 0 0 1 8 14a17.612 17.612 0 0 1 .2-2.667H3.666A10.611 10.611 0 0 0 3.333 14a10.613 10.613 0 0 0 .333 2.667Zm7.2 0h6.267a17.63 17.63 0 0 0 .2-2.667 17.627 17.627 0 0 0-.2-2.667h-6.267a17.627 17.627 0 0 0-.2 2.667 17.63 17.63 0 0 0 .2 2.667Zm8.933 0h4.534A10.625 10.625 0 0 0 24.666 14a10.622 10.622 0 0 0-.333-2.667h-4.534A17.576 17.576 0 0 1 20 14a17.58 17.58 0 0 1-.2 2.667Zm-.533-8h3.933a11.064 11.064 0 0 0-2.416-2.9 9.594 9.594 0 0 0-3.317-1.834c.4.734.75 1.495 1.05 2.284.3.789.55 1.605.75 2.45Zm-7.8 0h5.067c-.267-.978-.611-1.9-1.034-2.767-.422-.867-.922-1.7-1.5-2.5a16.94 16.94 0 0 0-1.5 2.5 15.786 15.786 0 0 0-1.033 2.767Zm-6.667 0h3.934c.2-.845.45-1.661.75-2.45.3-.79.65-1.55 1.05-2.284a9.594 9.594 0 0 0-3.317 1.834 11.064 11.064 0 0 0-2.417 2.9Z"/>
+</svg>
+`;  // Replace with your GitHub SVG
+      name = 'Web';
+      break;
+    case 'github':
+      icon = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="27" fill="none" viewBox="0 0 28 27">
+  <path fill="#fff" d="M14 0C6.27 0 0 6.197 0 13.841c0 6.116 4.011 11.304 9.575 13.135.699.128.925-.302.925-.666v-2.577c-3.894.838-4.705-1.633-4.705-1.633-.637-1.6-1.555-2.026-1.555-2.026-1.27-.859.096-.84.096-.84 1.406.096 2.146 1.426 2.146 1.426 1.248 2.116 3.275 1.505 4.074 1.15.125-.893.488-1.505.889-1.85-3.11-.352-6.378-1.538-6.378-6.84 0-1.513.547-2.747 1.442-3.716-.145-.35-.624-1.758.136-3.663 0 0 1.176-.372 3.851 1.418A13.572 13.572 0 0 1 14 6.693c1.19.006 2.388.16 3.507.466 2.673-1.79 3.846-1.418 3.846-1.418.762 1.906.283 3.315.138 3.663.899.969 1.441 2.204 1.441 3.715 0 5.316-3.275 6.487-6.392 6.83.502.429.96 1.27.96 2.563v3.798c0 .368.224.8.934.664C23.994 25.142 28 19.954 28 13.841 28 6.197 21.732 0 14 0Z"/>
+</svg>
+`;  // Replace with your ZkChaos SVG
+      name = 'GitHub';
+      break;
+    case 'docs':
+           icon = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" fill="none" viewBox="0 0 18 20">
+  <path fill="#fff" d="M3 20a2.893 2.893 0 0 1-2.125-.875A2.893 2.893 0 0 1 0 17v-3h3V0h15v17c0 .833-.292 1.542-.875 2.125A2.893 2.893 0 0 1 15 20H3Zm12-2a.97.97 0 0 0 .713-.288A.968.968 0 0 0 16 17V2H5v12h9v3c0 .283.096.52.287.712.192.192.43.288.713.288ZM6 7V5h9v2H6Zm0 3V8h9v2H6Z"/>
+</svg>
+`;  // Replace with your default SVG
+      name = 'Docs';
+      break;
+    case 'forum':
+           icon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path fill="#fff" d="M6.165 19c-.33 0-.607-.112-.83-.335a1.129 1.129 0 0 1-.336-.832V15.5h15.166V5H22.5c.33 0 .607.112.83.335.225.224.336.501.336.832v17.5L19 19H6.165ZM.332 17.833V1.5c0-.33.112-.608.335-.831a1.13 1.13 0 0 1 .832-.336h15.166c.33 0 .608.112.832.336.223.223.335.5.335.83V12c0 .332-.112.609-.335.832a1.13 1.13 0 0 1-.832.336H5L.332 17.833Zm15.167-7V2.667H2.665v8.166H15.5Z"/>
+</svg>`;  // Replace with your default SVG
+      name = 'Forum';
+      break;
+    case 'snapshot':
+           icon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="27" fill="none" viewBox="0 0 24 27">
+  <path fill="#fff" d="M2.667 26.333a2.568 2.568 0 0 1-1.884-.783A2.568 2.568 0 0 1 0 23.667V17.6l3.667-4.167 1.9 1.9-2.667 3h18.2L18.5 15.4l1.9-1.9 3.6 4.1v6.067a2.57 2.57 0 0 1-.783 1.883 2.568 2.568 0 0 1-1.884.783H2.667Zm0-2.666h18.666V21H2.667v2.667Zm7.5-7.5-4.7-4.7c-.511-.511-.761-1.14-.75-1.884.01-.744.272-1.372.783-1.883l6.533-6.533c.511-.511 1.145-.778 1.9-.8.756-.023 1.39.222 1.9.733l4.7 4.7a2.66 2.66 0 0 1 .8 1.867 2.429 2.429 0 0 1-.733 1.866L13.933 16.2c-.51.511-1.139.761-1.883.75-.744-.011-1.372-.272-1.883-.783Zm8.5-8.467-4.7-4.7-6.6 6.6 4.7 4.7 6.6-6.6Z"/>
+</svg>
+`;  // Replace with your default SVG
+      name = 'Snapshot';
+      break;
+    case 'discord':
+           icon = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="22" fill="none" viewBox="0 0 28 22">
+  <path fill="#fff" d="M23.719 1.815A22.805 22.805 0 0 0 17.942 0c-.249.45-.54 1.055-.74 1.536a21.21 21.21 0 0 0-6.402 0C10.6 1.055 10.302.45 10.051 0c-2.028.35-3.968.97-5.78 1.82C.613 7.344-.378 12.73.118 18.042c2.425 1.81 4.774 2.91 7.085 3.63a17.646 17.646 0 0 0 1.517-2.498 14.93 14.93 0 0 1-2.39-1.163c.201-.149.397-.304.586-.464 4.608 2.155 9.613 2.155 14.165 0 .192.16.388.315.586.464a14.91 14.91 0 0 1-2.393 1.165c.438.877.944 1.714 1.517 2.499 2.312-.72 4.664-1.82 7.089-3.633.581-6.156-.993-11.494-4.162-16.227ZM9.349 14.776c-1.383 0-2.518-1.291-2.518-2.863 0-1.573 1.11-2.866 2.518-2.866 1.407 0 2.541 1.291 2.517 2.866.002 1.572-1.11 2.863-2.517 2.863Zm9.302 0c-1.383 0-2.517-1.291-2.517-2.863 0-1.573 1.11-2.866 2.517-2.866 1.407 0 2.542 1.291 2.517 2.866 0 1.572-1.11 2.863-2.517 2.863Z"/>
+</svg>
+`;  // Replace with your default SVG
+      name = 'Discord';
+      break;
+    case 'twitter':
+           icon = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 22 22">
+  <path fill="#fff" d="M13.095 9.317 21.286 0h-1.94L12.23 8.088 6.552 0H0l8.59 12.231L0 22h1.94l7.51-8.543L15.448 22H22M2.64 1.432h2.982l13.723 19.207h-2.982"/>
+</svg>
+`;  // Replace with your default SVG
+      name = 'Twitter';
+      break;
+
+    default:
+      icon = null;
+      name = null;
+      break;
+  }
+
+  return { icon, name };
+}
+
 ---
 
-<Layout >
-  <div class="pt-96">
-    <h1>Ahoj {id}</h1>
-  </div>
-</Layout>
+<Layout>
+  <div class="pt-32 pb-8 w-full gap-16 justify-start items-start pl-8 pr-8 flex box-border">
+    <div class="gap-8 flex-col justify-start items-start flex box-border w-[25%]">
+      <div class="gap-6 flex-col justify-start items-start flex box-border w-full" style="gap:23.2959px;">
+        <img src={`/projects/${item.id}.png`} class="object-cover max-w-full vertical-align[middle] block border-0 w-full h-[230px]">
+        <div class="button w-full gap-2 border border-white justify-start items-center pt-1 pb-1 pl-2 flex box-border group" style="gap:9px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="14" viewBox="0 0 15 14" class="fill-white group-hover:fill-black">
+            <g clip-path="url(#clip0_803_996)">
+            <path d="M12.8097 4.71437L9.71572 1.65679L10.7349 0.637592C11.014 0.358527 11.3567 0.218994 11.7632 0.218994C12.1697 0.218994 12.5124 0.358527 12.7915 0.637592L13.8107 1.65679C14.0898 1.93585 14.2354 2.27255 14.2475 2.66688C14.2596 3.06121 14.1262 3.39791 13.8471 3.67698L12.8097 4.71437ZM11.7541 5.78817L4.03734 13.5049H0.943359V10.4109L8.66012 2.69418L11.7541 5.78817Z" />
+            </g>
+            <defs>
+            <clipPath id="clip0_803_996">
+            <rect width="13.3049" height="13.2859" transform="translate(0.943359 0.218994)"/>
+            </clipPath>
+            </defs>
+          </svg>
+          <div class="text-base font-bold leading-6 box-border" >Edit Research</div>
+        </div>
+        <div class="button w-full gap-2 border border-white justify-start items-center pt-1 pb-1 pl-2 flex box-border group" style="gap:9px;">
+<svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" class="fill-white group-hover:fill-black">
+<g clip-path="url(#clip0_803_997)">
+<path d="M11.8633 15.4377C11.2566 15.4377 10.741 15.2254 10.3163 14.8007C9.89165 14.3761 9.67932 13.8604 9.67932 13.2537C9.67932 13.1688 9.68538 13.0808 9.69752 12.9898C9.70965 12.8988 9.72785 12.8169 9.75212 12.7441L4.61974 9.75936C4.41348 9.94136 4.18294 10.0839 3.92814 10.1871C3.67335 10.2902 3.40641 10.3418 3.12735 10.3418C2.52068 10.3418 2.00502 10.1294 1.58036 9.70476C1.15569 9.2801 0.943359 8.76443 0.943359 8.15777C0.943359 7.55111 1.15569 7.03544 1.58036 6.61078C2.00502 6.18611 2.52068 5.97378 3.12735 5.97378C3.40641 5.97378 3.67335 6.02535 3.92814 6.12848C4.18294 6.23161 4.41348 6.37418 4.61974 6.55618L9.75212 3.57139C9.72785 3.49859 9.70965 3.41669 9.69752 3.3257C9.68538 3.2347 9.67932 3.14673 9.67932 3.0618C9.67932 2.45513 9.89165 1.93947 10.3163 1.5148C10.741 1.09014 11.2566 0.877808 11.8633 0.877808C12.47 0.877808 12.9856 1.09014 13.4103 1.5148C13.835 1.93947 14.0473 2.45513 14.0473 3.0618C14.0473 3.66846 13.835 4.18412 13.4103 4.60879C12.9856 5.03345 12.47 5.24579 11.8633 5.24579C11.5842 5.24579 11.3173 5.19422 11.0625 5.09109C10.8077 4.98795 10.5772 4.84539 10.3709 4.66339L5.23854 7.64817C5.2628 7.72097 5.281 7.80287 5.29314 7.89387C5.30527 7.98487 5.31134 8.07284 5.31134 8.15777C5.31134 8.2427 5.30527 8.33067 5.29314 8.42167C5.281 8.51267 5.2628 8.59457 5.23854 8.66737L10.3709 11.6522C10.5772 11.4702 10.8077 11.3276 11.0625 11.2245C11.3173 11.1213 11.5842 11.0698 11.8633 11.0698C12.47 11.0698 12.9856 11.2821 13.4103 11.7068C13.835 12.1314 14.0473 12.6471 14.0473 13.2537C14.0473 13.8604 13.835 14.3761 13.4103 14.8007C12.9856 15.2254 12.47 15.4377 11.8633 15.4377Z"/>
+</g>
+<defs>
+<clipPath id="clip0_803_997">
+<rect width="13.1039" height="14.5599"  transform="translate(0.943359 0.877808)"/>
+</clipPath>
+</defs>f
+</svg>        <div class=" text-base font-bold leading-6 box-border" >Share</div>
+        </div>
+      </div>
+    </div>
+    <div class="w-full gap-9 flex-col justify-start items-start flex box-border">
+      <div class="gap-4 flex flex-col w-full max-w-[90%]">
+        <div class="w-full justify-between items-start flex">
+          <div class="gap-2 flex-col justify-start items-start flex">
+            <div class="text-white text-3xl font-bold leading-none">{item.name}</div>
+            <div class="opacity-50 text-white text-base font-normal leading-[23.3px] uppercase">{item.categories.join(', ')}</div>
+          </div>
+          <div style="flex-direction:column;justify-content:flex-start;align-items:center;display:flex;box-sizing:border-box;margin-top:-35px;">
+            <div style="gap:8px;background-color:rgb(0, 0, 0);flex: 0 1 auto;justify-content:center;align-items:center;top: 20px;position: relative;margin-bottom:0px;padding:8px;display:flex;box-sizing:border-box;">
+              <div style="color:rgb(255, 255, 255);text-shadow:rgba(0, 0, 0, 0.8) 2px 4px 12px;font-size: 13px;font-weight:700;line-height:24px;box-sizing:border-box;">Privacy score</div>
+            </div>
+            <div style="gap:12px;border:2px solid rgb(255, 255, 255);flex: 0 1 auto;justify-content:flex-start;align-items:flex-start;padding: 20px 28px;display:flex;box-sizing:border-box;">
+              <div style="color:rgb(255, 255, 255);text-shadow:rgba(0, 0, 0, 0.8) 2px 4px 12px;font-size: 28px;font-weight: 600;line-height:32px;box-sizing:border-box;">{Math.floor(Math.random() * (81 - 30) + 30)}%</div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><script xmlns="" type="text/javascript"/><script xmlns=""/><script xmlns=""/>
+              <g clip-path="url(#clip0_803_1001)">
+              <g opacity="0.5">
+              <mask id="mask0_803_1001" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="32" height="32">
+              <rect width="32" height="32" fill="#D9D9D9"/>
+              </mask>
+              <g mask="url(#mask0_803_1001)">
+              <path d="M14.666 22.6667H17.3327V14.6667H14.666V22.6667ZM15.9993 12.0001C16.3771 12.0001 16.6938 11.8723 16.9493 11.6167C17.2049 11.3612 17.3327 11.0445 17.3327 10.6667C17.3327 10.289 17.2049 9.9723 16.9493 9.71675C16.6938 9.46119 16.3771 9.33341 15.9993 9.33341C15.6216 9.33341 15.3049 9.46119 15.0493 9.71675C14.7938 9.9723 14.666 10.289 14.666 10.6667C14.666 11.0445 14.7938 11.3612 15.0493 11.6167C15.3049 11.8723 15.6216 12.0001 15.9993 12.0001ZM15.9993 29.3334C14.1549 29.3334 12.4216 28.9834 10.7993 28.2834C9.17713 27.5834 7.76602 26.6334 6.56602 25.4334C5.36602 24.2334 4.41602 22.8223 3.71602 21.2001C3.01602 19.5779 2.66602 17.8445 2.66602 16.0001C2.66602 14.1556 3.01602 12.4223 3.71602 10.8001C4.41602 9.17786 5.36602 7.76675 6.56602 6.56675C7.76602 5.36675 9.17713 4.41675 10.7993 3.71675C12.4216 3.01675 14.1549 2.66675 15.9993 2.66675C17.8438 2.66675 19.5771 3.01675 21.1993 3.71675C22.8216 4.41675 24.2327 5.36675 25.4327 6.56675C26.6327 7.76675 27.5827 9.17786 28.2827 10.8001C28.9827 12.4223 29.3327 14.1556 29.3327 16.0001C29.3327 17.8445 28.9827 19.5779 28.2827 21.2001C27.5827 22.8223 26.6327 24.2334 25.4327 25.4334C24.2327 26.6334 22.8216 27.5834 21.1993 28.2834C19.5771 28.9834 17.8438 29.3334 15.9993 29.3334Z" fill="white"/>
+              </g>
+              </g>
+              </g>
+              <defs>
+              <clipPath id="clip0_803_1001">
+              <rect width="32" height="32" fill="white"/>
+              </clipPath>
+              </defs>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="gap-1 flex-col justify-start items-start pt-4 flex">
+          <div class="gap-2 flex-shrink-0 justify-start items-center flex">
+            <div class="text-gray-500 text-base font-normal leading-none">Ecosystem</div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none"><script xmlns="" type="text/javascript"/><script xmlns=""/><script xmlns=""/>
+              <g clip-path="url(#clip0_668_26627)">
+              <g opacity="0.5">
+              <mask id="mask0_668_26627" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="18" height="19">
+              <rect x="0.078125" y="0.974609" width="17.4719" height="17.4719" fill="#D9D9D9"/>
+              </mask>
+              <g mask="url(#mask0_668_26627)">
+              <path d="M8.08712 13.3506H9.54312V8.98263H8.08712V13.3506ZM8.81512 7.52664C9.02138 7.52664 9.19428 7.45687 9.33382 7.31734C9.47335 7.17781 9.54312 7.00491 9.54312 6.79864C9.54312 6.59238 9.47335 6.41948 9.33382 6.27994C9.19428 6.14041 9.02138 6.07065 8.81512 6.07065C8.60885 6.07065 8.43595 6.14041 8.29642 6.27994C8.15689 6.41948 8.08712 6.59238 8.08712 6.79864C8.08712 7.00491 8.15689 7.17781 8.29642 7.31734C8.43595 7.45687 8.60885 7.52664 8.81512 7.52664ZM8.81512 16.9906C7.80806 16.9906 6.86166 16.7995 5.97593 16.4173C5.0902 16.0351 4.31974 15.5164 3.66455 14.8612C3.00935 14.206 2.49065 13.4355 2.10845 12.5498C1.72626 11.6641 1.53516 10.7177 1.53516 9.71063C1.53516 8.70357 1.72626 7.75717 2.10845 6.87144C2.49065 5.98571 3.00935 5.21525 3.66455 4.56005C4.31974 3.90486 5.0902 3.38616 5.97593 3.00396C6.86166 2.62176 7.80806 2.43066 8.81512 2.43066C9.82218 2.43066 10.7686 2.62176 11.6543 3.00396C12.54 3.38616 13.3105 3.90486 13.9657 4.56005C14.6209 5.21525 15.1396 5.98571 15.5218 6.87144C15.904 7.75717 16.0951 8.70357 16.0951 9.71063C16.0951 10.7177 15.904 11.6641 15.5218 12.5498C15.1396 13.4355 14.6209 14.206 13.9657 14.8612C13.3105 15.5164 12.54 16.0351 11.6543 16.4173C10.7686 16.7995 9.82218 16.9906 8.81512 16.9906Z" fill="white"/>
+              </g>
+              </g>
+              </g>
+              <defs>
+              <clipPath id="clip0_668_26627">
+              <rect width="17.4719" height="17.4719" fill="white" transform="translate(0.078125 0.974609)"/>
+              </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <div class="text-white text-base font-normal leading-[23.3px]">{item.ecosystem || "TBD"}</div>
+          <div class="gap-2 flex-col justify-start items-start flex">
+            <div class="text-gray-500 pt-4 text-base font-normal leading-none">Links</div>
+            <div class="gap-6 flex-shrink-0 justify-start items-end flex">
+              {Object.entries(item.links).map(([key, url]) => {
+                const { icon, name } = getPlatform(key);
+                return (
+                  icon && name ? (
+                  <div class="flex flex-shrink-0 gap-2 items-center justify-start p-0 cursor-pointer hover:underline" key={key}>
+                    <div class="icon w-6 h-6" set:html={icon}></div>
+                    <a class="text-sm" href={url} target="_blank" rel="noopener noreferrer">{name}</a>
+                  </div>
+                  ) : ""
+                );
+              })}
+            </div>
+          </div>
+        </div>
+        <div class="gap-2 flex-col justify-start items-start pt-4 flex">
+          <div class="w-[220px] text-gray-500 text-base font-normal leading-none">Project desription</div>
+          <div class="w-[800px] text-white text-base font-normal leading-[23.3px]">{item.description}</div>
+        </div>
+        <!-- <div class="gap-4 flex-col justify-start items-start pt-4 flex w-full">
+          <div class="opacity-50 text-white text-base font-normal leading-none">Team Members</div>
+          <div class="w-full items-start grid grid-cols-4 gap-2 gap-y-4">
+            <div class="flex w-full gap-3 items-center justify-start">
+              <img class="w-12 h-12 object-cover block" src="https://uploads-ssl.webflow.com/6521cd1122d772ff9bb72fc3/6521d1576fa348025957cb5a_Ellipse-25.png" loading="lazy" alt="">
+              <div class="flex-col items-start justify-start">
+                <div class="text-white text-base font-bold leading-5">Coinmandeer</div>
+                <div class="text-gray-500 text-base font-medium leading-5">Designer</div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <!-- <div class="py-8">
+          <div class="text-white text-shadow-lg text-base font-bold leading-8 relative left-0 mb-[-2.25%] ml-[-20%] box-border">
+            TECHNOLOGY
+          </div>
+          <wrapper class="w-full h-[2px] border border-white justify-center items-center flex box-border"></wrapper>
+        </div> -->
+        <!-- <div class="w-full items-start grid grid-cols-4 gap-2 gap-y-4">
+          <div class="flex flex-col items-start justify-start gap-2">
+            <div class="text-gray-500 text-base font-medium leading-5">Technology name</div>
+            <div class="text-white text-base font-medium leading-5">Mixer9000</div>
+          </div>
+        </div>
+      </div> -->
+    </Layout>
 
 <style>
 </style>

@@ -21,6 +21,17 @@
 </script>
 
 <div class="flex flex-col items-start justify-start gap-8 w-1/4 box-border">
+  <button class="flex items-center justify-center gap-1 p-2 bg-white text-black"
+    ><div class="flex gap-1">
+      <span class="text-xl font-bold leading-7 box-border text-left w-min"
+        >Featured</span
+      >
+      <span class="text-gray-400 text-lg font-light leading-7 box-border"
+        >(8)</span
+      >
+    </div>
+  </button>
+  <hr class="border border-white w-full" />
   <div class="flex flex-col items-start justify-start gap-2 box-border">
     {#each sortedCategories as category}
       <button
