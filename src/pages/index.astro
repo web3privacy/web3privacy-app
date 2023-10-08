@@ -6,12 +6,9 @@ import Sidebar from "../components/Sidebar.svelte"
 import CardList from "../components/CardList.svelte"
 import CardListTwo from "../components/CardListTwo.svelte"
 
-import { getFilteredProjects } from "../lib/utils/calculateCounts"
+import { loadData } from "../lib/utils/loadData"
 
-const projects = await getFilteredProjects()
-
-console.log("projects")
-console.log(projects)
+const bundle = await loadData();
 
 ---
 
@@ -26,7 +23,7 @@ console.log(projects)
 				</div>
 				<input type="search" id="default-search" class="block w-full p-3 pl-10 text-md text-white text-gray-900 bg-transparent border border-white focus:ring-0 focus:ring-offset-0 focus:outline-none" placeholder="Search" required="">
 		</div>
-			<Sidebar :client-only/>
+			<Sidebar {bundle} :client-only/>
 		</div>
 		<div class="w-full gap-9 flex-col justify-start items-start flex box-border">
 				<div class="gap-3 flex-col justify-start items-start flex box-border">
@@ -65,7 +62,7 @@ console.log(projects)
 						</div>
 					</div>
 		
-					{projects.map(project => (
+					{bundle.projects.map(project => (
 						<CardListTwo item={project} />
 					))} 
 				</div>
