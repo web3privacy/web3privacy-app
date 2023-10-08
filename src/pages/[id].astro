@@ -1,28 +1,23 @@
+---
 import Layout from '../layouts/Layout.astro';
 import { getFilteredProjects } from "../lib/utils/calculateCounts"
 
-// Define the async function to get projects
-async function getProjects() {
-  const projects = await getFilteredProjects();
-  return projects;
-}
 
 export async function getStaticPaths() {
-  // Use the getProjects function to get the projects data
-  const projects = await getProjects();
-  
-  // Map over the projects array to create an array of path objects
+  const projects = await getFilteredProjects()
+  console.log(projects)
   const paths = projects.map(project => ({
     params: { id: project.id },
   }));
-
   console.log(paths);
   return paths;
 }
 
+
 const { id } = Astro.params;
 
-// rest of your code
+---
+
 <Layout >
   <div class="pt-96">
     <h1>Ahoj {id}</h1>
