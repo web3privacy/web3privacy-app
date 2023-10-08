@@ -4,23 +4,24 @@
   function animateCard(el) {
     console.log("Animating1");
   }
+  export let item;
 </script>
 
 <div
-  class="px-2 py-2 pr-6 border border-1 hover:cursor-point transition-all border-white/30 cursor-pointer hover:bg-white hover:text-black hover:border-black w-full group"
-  on:mouseenter={animateCard}
+  class="px-2 py-2 pr-6 border border-1 hover:cursor-pointer transition-all border-white/30 cursor-pointer hover:bg-white hover:text-black hover:border-black w-full group"
+  onclick="location.href='/{item.id}';"
 >
   <div class="w-full gap-6 justify-center items-center flex">
     <img
-      src="/zkBob.png"
+      src={"/unknown.svg"}
       alt=""
-      class="object-cover bg-gray-300 w-44 border border-black"
+      class="bg-black object-cover w-44 border border-black"
     />
     <div class="w-full gap-3 flex flex-col justify-start items-start">
       <div class="gap-2 flex flex-col justify-start items-start">
         <div class="flex flex-0-1-auto justify-start items-center gap-2">
           <div class=" text-shadow text-2xl font-bold animate-card">
-            ZK-Bob.com
+            {item.name}
           </div>
           <svg
             xmlns="http://www.w3.org/2000/svg"

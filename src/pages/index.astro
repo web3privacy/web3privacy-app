@@ -5,6 +5,14 @@ import { config } from '../lib/config.js';
 import Sidebar from "../components/Sidebar.svelte"
 import CardList from "../components/CardList.svelte"
 import CardListTwo from "../components/CardListTwo.svelte"
+
+import { getFilteredProjects } from "../lib/utils/calculateCounts"
+
+const projects = await getFilteredProjects()
+
+console.log("projects")
+console.log(projects)
+
 ---
 
 <Layout>
@@ -56,7 +64,11 @@ import CardListTwo from "../components/CardListTwo.svelte"
 						</select>
 						</div>
 					</div>
-					<CardListTwo/>
+		
+					{projects.map(project => (
+						
+						<CardListTwo item={project}/>
+					))} 
 				</div>
 			</div>
 		</div>

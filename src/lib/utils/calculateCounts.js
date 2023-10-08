@@ -1,29 +1,35 @@
 // utils/calculateCounts.js
 import { loadData } from "./loadData";
 
+// This function filters the projects based on the given conditions
+function filterProjects(projects) {
+  return projects.filter(
+    (project) =>
+      project.categories &&
+      Array.isArray(project.categories) &&
+      Object.keys(project).length > 1,
+  );
+}
+
+// This function computes the counts
 export async function calculateCounts() {
   const data = await loadData();
+  const filteredProjects = filterProjects(data.projects);
   const counts = {};
   let totalCount = 0;
 
-  data.projects.forEach((project) => {
-    if (
-      project.categories &&
-      Array.isArray(project.categories) &&
-      Object.keys(project).length > 1
-    ) {
-      project.categories.forEach((categoryId) => {
-        const categoryObj = data.categories.find(
-          (category) => category.id === categoryId,
-        );
+  filteredProjects.forEach((project) => {
+    project.categories.forEach((categoryId) => {
+      const categoryObj = data.categories.find(
+        (category) => category.id === categoryId,
+      );
 
-        if (categoryObj) {
-          const categoryName = categoryObj.name;
-          counts[categoryName] = (counts[categoryName] || 0) + 1;
-          totalCount += 1; // Increment the total count
-        }
-      });
-    }
+      if (categoryObj) {
+        const categoryName = categoryObj.name;
+        counts[categoryName] = (counts[categoryName] || 0) + 1;
+        totalCount += 1; // Increment the total count
+      }
+    });
   });
 
   counts.All = totalCount; // Add the total count to the counts object under "All"
@@ -43,4 +49,10 @@ export async function calculateCounts() {
   );
 
   return sortedCounts; // or return countsArray if you prefer array format
+}
+
+// This function will be exported and will return the filtered projects
+export async function getFilteredProjects() {
+  const data = await loadData();
+  return filterProjects(data.projects);
 }

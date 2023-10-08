@@ -6,10 +6,7 @@
 
   const countsPromise = calculateCounts(); // Call calculateCounts directly
 
-  console.log("countsPromise");
-
   countsPromise.then((counts) => {
-    console.log(counts);
     projectCounts.set(counts); // Set the store value once the promise resolves
   });
 
