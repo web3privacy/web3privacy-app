@@ -6,9 +6,13 @@
   export let bundle;
 
   for (let category of bundle.categories) {
-    category.count = bundle.projects.filter(p => p.categories?.includes(category.id)).length
+    category.count = bundle.projects.filter((p) =>
+      p.categories?.includes(category.id),
+    ).length;
   }
-  const sortedCategories = bundle.categories.sort((x, y) => x.count < y.count ? 1 : -1)
+  const sortedCategories = bundle.categories.sort((x, y) =>
+    x.count < y.count ? 1 : -1,
+  );
 
   function setActiveCategory(category) {
     activeCategory.set(category);
